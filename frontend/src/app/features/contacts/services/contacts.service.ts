@@ -1,5 +1,6 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { ApiService } from '../../../core/services/api.service';
 import { Contact } from '../../../core/models/contact.model';
 import { EmailAddress } from '../../../core/models/email.model';
@@ -57,11 +58,12 @@ export class ContactsService {
               this.selectedContactEmails.set([]);
             }
           }
-        },
-        error: (err) => {
-          this.contactsError.set(err.message || 'Failed to load contacts');
-          this.isLoadingContacts.set(false);
         }
+      }),
+      catchError((err) => {
+        this.contactsError.set(err.message || 'Failed to load contacts');
+        this.isLoadingContacts.set(false);
+        return of([]);
       })
     );
   }
@@ -87,12 +89,13 @@ export class ContactsService {
         next: (emails) => {
           this.selectedContactEmails.set(emails);
           this.isLoadingEmails.set(false);
-        },
-        error: (err) => {
-          this.emailsError.set(err.message || 'Failed to load email addresses');
-          this.selectedContactEmails.set([]);
-          this.isLoadingEmails.set(false);
         }
+      }),
+      catchError((err) => {
+        this.emailsError.set(err.message || 'Failed to load email addresses');
+        this.selectedContactEmails.set([]);
+        this.isLoadingEmails.set(false);
+        return of([]);
       })
     );
   }
