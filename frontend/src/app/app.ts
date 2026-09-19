@@ -5,7 +5,7 @@ import { ContactsDashboardComponent } from './features/contacts/pages/contacts-d
   selector: 'app-root',
   standalone: true,
   imports: [ContactsDashboardComponent],
-  template: `<app-contacts-dashboard></app-contacts-dashboard>`,
+  templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {}

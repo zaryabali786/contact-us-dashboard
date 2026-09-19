@@ -77,7 +77,17 @@ export class ContactListComponent implements OnInit {
 
   onRowAction(type: 'chat' | 'phone' | 'more', contact: Contact, event: Event): void {
     event.stopPropagation();
-    // Action trigger for row action
-    console.log(`Action [${type}] triggered for ${contact.first_name} ${contact.last_name}`);
+    this.selectContact(contact);
+
+    if (type === 'chat') {
+      const email = contact.dial || `${contact.first_name.toLowerCase()}.${contact.last_name.toLowerCase()}@example.com`;
+      if (typeof window !== 'undefined') {
+        window.open(`mailto:${email}`, '_blank');
+      }
+    } else if (type === 'phone' && contact.phone) {
+      if (typeof window !== 'undefined') {
+        window.open(`tel:${contact.phone}`, '_self');
+      }
+    }
   }
 }

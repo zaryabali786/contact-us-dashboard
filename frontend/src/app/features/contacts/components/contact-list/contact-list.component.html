@@ -33,12 +33,13 @@
     <label class="search-micro-label" for="contact-search-input">Search for a contact</label>
     <div class="search-input-wrapper">
       <input
+        #searchInput
         id="contact-search-input"
         type="text"
         class="search-input"
         placeholder="Name, email or phone number"
         [value]="searchInputValue"
-        (input)="onSearchChange($any($event.target).value)"
+        (input)="onSearchChange(searchInput.value)"
         autocomplete="off"
       />
       @if (searchInputValue) {
