@@ -33,12 +33,14 @@
       </div>
 
       <div class="profile-title-block">
-        <h2 class="profile-name">
-          {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
-        </h2>
-        <p class="profile-role">
-          {{ contact.job_title || 'UI/UX Designer' }}
-        </p>
+        <div class="profile-info-wrap">
+          <h2 class="profile-name">
+            {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
+          </h2>
+          <p class="profile-role">
+            {{ contact.job_title || 'UI/UX Designer' }}
+          </p>
+        </div>
 
         <!-- Action Buttons Bar -->
         <div class="actions-bar">
