@@ -25,6 +25,9 @@ export class ContactListComponent implements OnInit {
   readonly contactSelected = output<Contact>();
   readonly menuClicked = output<void>();
 
+  readonly chatUnselectedIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAt0lEQVR4AcyP3Q3CMAyELwkDdASYANigDAKCPahkBAOwQRWVPWAT2IOi4FgkCg/9CU9YudZ1/V1sTafLnY6NGyWqF0hCw7lp8t2fGhRIQid5dpoNEzWlrMjrZsNxPF73d5hd/gO2PMmqU7pdUrW78f94wtiWqvUWrxadeqIgqktlMA+0h62AvmImVwzIAWd8QkfQF5R7+NdY+ZtjL+03MzZTfeLmA0vOFyyVgQcbE7eIQTbMIILBGwAA//8k8pzcAAAABklEQVQDAPTvY0VVvvB4AAAAAElFTkSuQmCC';
+  readonly chatSelectedIcon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAvklEQVR4AcyQMQ7CMAxF43Rg7RHKCQAJmOEQSLCxICFxCbgBAz1Ap3ILmIE7lIOgGBtiYYaWRCyN8hMn8XNs283iVpEwRKvZpW/UsGRnpKDZSSDVjgzrc5QdDa/n14kvsYqGVWrZP7BpBewKQJzWCcENDsfRWdUsabsiL8fLB73UyTlIudPWQo/cXpNqfoN8SgBOvwRo9sYPyz96m7c7L6Ginz+ueTnskqBJ1JOdEF+wXDbt1LStBIiGObAEeAIAAP//DrrszgAAAAZJREFUAwBjVHAuB63B1gAAAABJRU5ErkJggg==';
+
   searchInputValue = '';
 
   toggleMenu(): void {

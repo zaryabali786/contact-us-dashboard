@@ -14,10 +14,21 @@
   overflow-x: hidden;
   background-color: #ffffff;
   @include custom-scrollbar;
-  padding: 56px 64px 48px 64px;
+  padding: 40px 48px;
 
-  @include laptop {
-    padding: 40px 48px 36px 48px;
+  &.sidebar-collapsed-mode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .top-nav-bar {
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .details-content {
+      margin: 0 auto;
+    }
   }
 
   @include tablet {
@@ -29,42 +40,74 @@
   }
 }
 
-/* Navigation Bar (Mobile back button & sidebar expand toggle) */
+/* Navigation Bar */
 .top-nav-bar {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
 
-  &.mobile-only {
-    display: none;
+  &.show-collapsed-desktop {
+    display: flex;
+  }
 
-    @include mobile {
-      display: flex;
+  @include mobile {
+    display: flex !important;
+    margin-bottom: 20px;
+
+    .btn-desktop-expand {
+      display: none !important;
+    }
+
+    .btn-back {
+      display: inline-flex !important;
     }
   }
 }
 
-.btn-toggle-sidebar,
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #625bf7;
-  padding: 7px 14px;
-  border-radius: 8px;
-  background-color: #f4f3ff;
+.btn-desktop-expand {
+  width: 36px;
+  height: 36px;
   border: 1px solid #ebeff4;
+  border-radius: 8px;
+  background-color: #ffffff;
+  @include flex-center;
   @include transition-standard;
+  cursor: pointer;
 
   &:hover {
-    background-color: #eceafd;
+    border-color: #d1d5db;
+    background-color: #f9fafb;
   }
 
   &:active {
-    transform: translateY(1px);
+    background-color: #f3f4f6;
+  }
+}
+
+.btn-back {
+  display: none;
+
+  @include mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #625bf7;
+    padding: 7px 14px;
+    border-radius: 8px;
+    background-color: #f4f3ff;
+    border: 1px solid #ebeff4;
+    @include transition-standard;
+
+    &:hover {
+      background-color: #eceafd;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
   }
 }
 
@@ -78,19 +121,34 @@
   display: flex;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 44px;
+  margin-bottom: 40px;
+  padding-left: 96px;
+
+  &.no-avatar {
+    gap: 0;
+  }
 
   @include tablet {
     gap: 18px;
     margin-bottom: 32px;
+    padding-left: 96px;
+
+    &.no-avatar {
+      gap: 0;
+    }
   }
 
   @include mobile {
+    padding-left: 0;
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 16px;
     margin-bottom: 28px;
+
+    &.no-avatar {
+      gap: 0;
+    }
   }
 }
 
@@ -118,6 +176,19 @@
   object-fit: cover;
   background-color: #e5e7eb;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+
+  &.placeholder-avatar {
+    background-color: #ffffff;
+    border-radius: 50%;
+    @include flex-center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+    .placeholder-avatar-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
 }
 
 .profile-title-block {
@@ -131,23 +202,20 @@
 }
 
 .profile-name {
-  font-size: 22px;
+  font-family: 'Lato', sans-serif;
   font-weight: 700;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: 0px;
   color: #171c26;
-  letter-spacing: -0.2px;
-
-  @include tablet {
-    font-size: 20px;
-  }
-
-  @include mobile {
-    font-size: 22px;
-  }
 }
 
 .profile-role {
-  font-size: 13px;
+  font-family: 'Lato', sans-serif;
   font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #8d96a5;
   margin-top: 4px;
   margin-bottom: 18px;
@@ -169,20 +237,29 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 38px;
-  padding: 0 18px;
-  background-color: #625bf7;
+  height: 40px;
+  padding: 0 20px;
+  background-color: #6b59cc;
   color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(98, 91, 247, 0.3);
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(107, 89, 204, 0.25);
   @include transition-standard;
 
+  .btn-message-icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
   &:hover {
-    background-color: #4f46e5;
+    background-color: #5b49be;
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(98, 91, 247, 0.38);
+    box-shadow: 0 6px 16px rgba(107, 89, 204, 0.35);
   }
 
   &:active {
@@ -191,17 +268,24 @@
 }
 
 .btn-action-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   border: 1px solid #ebeff4;
   background-color: #ffffff;
+  color: #8083a3;
   @include flex-center;
   @include transition-standard;
 
+  .btn-action-img {
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
   &:hover {
-    border-color: #d1d5db;
-    background-color: #f9fafb;
+    border-color: #cbd5e1;
+    background-color: #f7f8fe;
     transform: translateY(-1px);
   }
 }
@@ -225,27 +309,44 @@
   display: flex;
   align-items: flex-start;
   min-height: 22px;
+  gap: 24px;
+
+  &.social-row,
+  &:has(.social-btn-group) {
+    align-items: center;
+
+    .info-label {
+      padding-top: 0;
+    }
+  }
 
   @include mobile {
     flex-direction: column;
     gap: 4px;
+    align-items: flex-start;
+
+    &.social-row,
+    &:has(.social-btn-group) {
+      align-items: flex-start;
+    }
   }
 }
 
 .info-label {
-  width: 90px;
+  width: 72px;
   flex-shrink: 0;
-  font-size: 13px;
-  font-weight: 500;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: right;
   color: #8d96a5;
   padding-top: 1px;
 
-  @include tablet {
-    width: 75px;
-  }
-
   @include mobile {
     width: 100%;
+    text-align: left;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -257,7 +358,11 @@
 
 .info-value {
   flex: 1;
-  font-size: 13px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #2e3345;
   min-width: 0;
   overflow-wrap: anywhere;
@@ -265,7 +370,11 @@
 }
 
 .bio-text {
-  line-height: 1.6;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #2e3345;
   max-width: 480px;
 }
@@ -298,13 +407,16 @@
 .phone-entry {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  gap: 16px;
 }
 
 .pill-badge {
-  display: inline-block;
-  padding: 3px 10px;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
   font-size: 11px;
   font-weight: 500;
   background-color: #f1f3f7;

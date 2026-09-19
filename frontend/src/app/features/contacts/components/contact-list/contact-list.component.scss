@@ -84,6 +84,12 @@
   &:active {
     background-color: #f3f4f6;
   }
+
+  &.btn-menu {
+    @include mobile {
+      display: none !important;
+    }
+  }
 }
 
 /* Search Section */
@@ -107,8 +113,11 @@
 
 .search-micro-label {
   display: block;
-  font-size: 12px;
-  font-weight: 500;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #9aa1b0;
   margin-bottom: 6px;
 }
@@ -121,21 +130,24 @@
 
 .search-input {
   width: 100%;
-  font-size: 15px;
-  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
   color: #171c26;
   background: transparent;
   padding: 6px 28px 6px 0;
   box-sizing: border-box;
 
   &::placeholder {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0px;
     color: #171c26;
     opacity: 0.85;
-    font-weight: 600;
-  }
-
-  @include mobile {
-    font-size: 14px;
   }
 }
 
@@ -192,7 +204,11 @@
   }
 
   &.selected {
-    background-color: #f7f8fe;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+    }
 
     .contact-name {
       color: #171c26;
@@ -200,13 +216,22 @@
     }
 
     .action-btn {
-      background-color: #eceafd;
+      background-color: #ededf7;
       border-color: transparent;
-      color: #625bf7;
+      color: #6b59cc;
 
       &:hover {
-        background-color: #625bf7;
-        color: #ffffff;
+        background-color: #e2e1f4;
+        color: #6b59cc;
+      }
+
+      &.chat-btn {
+        .chat-img.unselected {
+          display: none;
+        }
+        .chat-img.selected {
+          display: block;
+        }
       }
     }
   }
@@ -257,6 +282,19 @@
   border-radius: 12px;
   object-fit: cover;
   background-color: #e5e7eb;
+
+  &.placeholder-avatar {
+    background-color: #ffffff;
+    border-radius: 50%;
+    @include flex-center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+    .placeholder-avatar-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
 }
 
 .status-dot {
@@ -297,30 +335,24 @@
 }
 
 .contact-name {
-  font-size: 13.5px;
-  font-weight: 600;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #171c26;
   @include truncate;
-
-  @include tablet {
-    font-size: 13px;
-  }
-
-  @include mobile {
-    font-size: 14.5px;
-  }
 }
 
 .contact-role {
-  font-size: 12px;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
   font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0px;
   color: #8d96a5;
   margin-top: 2px;
   @include truncate;
-
-  @include mobile {
-    font-size: 12.5px;
-  }
 }
 
 /* Quick Actions */
@@ -348,7 +380,7 @@
   border-radius: 8px;
   border: 1px solid #ebeff4;
   background-color: #ffffff;
-  color: #848e9c;
+  color: #8083a3;
   @include flex-center;
   @include transition-standard;
 
@@ -368,6 +400,29 @@
     border-color: #cbd5e1;
     color: #625bf7;
     background-color: #ffffff;
+  }
+
+  &.chat-btn {
+    .chat-img {
+      width: 15px;
+      height: 15px;
+      display: none;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .chat-img.unselected {
+      display: block;
+    }
+
+    &:hover {
+      .chat-img.unselected {
+        display: none;
+      }
+      .chat-img.selected {
+        display: block;
+      }
+    }
   }
 }
 

@@ -2,7 +2,7 @@
   <!-- Header Bar -->
   <header class="list-header">
     <div class="header-left">
-      <button class="header-btn" aria-label="Main menu" type="button" (click)="toggleMenu()">
+      <button class="header-btn btn-menu" aria-label="Main menu" type="button" (click)="toggleMenu()">
         <app-icon name="menu" [size]="16" color="#171C26"></app-icon>
       </button>
       <h1 class="header-title">Contacts</h1>
@@ -123,7 +123,7 @@
           >
             <!-- Left: Avatar / Status indicator + Text -->
             <div class="contact-profile">
-              <div class="avatar-container" [class.no-avatar]="!contact.avatar">
+              <div class="avatar-container">
                 @if (contact.avatar) {
                   <img
                     [src]="contact.avatar"
@@ -131,20 +131,28 @@
                     class="contact-avatar"
                     appImageFallback
                   />
-                  <span
-                    class="status-dot"
-                    [class.online]="contact.status === 'online'"
-                    [class.away]="contact.status === 'away'"
-                    [class.offline]="contact.status === 'offline'"
-                  ></span>
                 } @else {
-                  <span
-                    class="status-dot standalone"
-                    [class.online]="contact.status === 'online'"
-                    [class.away]="contact.status === 'away'"
-                    [class.offline]="contact.status === 'offline'"
-                  ></span>
+                  <div class="contact-avatar placeholder-avatar" aria-label="Default avatar">
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="placeholder-avatar-svg">
+                      <circle cx="40" cy="40" r="37.5" stroke="#171C26" stroke-width="5" fill="#FFFFFF"/>
+                      <circle cx="40" cy="31" r="13" fill="#171C26"/>
+                      <g [attr.clip-path]="'url(#listAvatarClip-' + contact.id + ')'">
+                        <path d="M14 72C16 54 27 48 40 48C53 48 64 54 66 72" fill="#171C26"/>
+                      </g>
+                      <defs>
+                        <clipPath [id]="'listAvatarClip-' + contact.id">
+                          <circle cx="40" cy="40" r="35"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
                 }
+                <span
+                  class="status-dot"
+                  [class.online]="contact.status === 'online'"
+                  [class.away]="contact.status === 'away'"
+                  [class.offline]="contact.status === 'offline'"
+                ></span>
               </div>
 
               <div class="contact-meta">
@@ -165,7 +173,20 @@
                 [attr.aria-label]="'Message ' + contact.first_name"
                 (click)="onRowAction('chat', contact, $event)"
               >
-                <app-icon name="chat" [size]="14"></app-icon>
+                <img
+                  class="chat-img unselected"
+                  [src]="chatUnselectedIcon"
+                  alt="Chat"
+                  width="15"
+                  height="15"
+                />
+                <img
+                  class="chat-img selected"
+                  [src]="chatSelectedIcon"
+                  alt="Chat"
+                  width="15"
+                  height="15"
+                />
               </button>
               <button
                 class="action-btn phone-btn"

@@ -52,3 +52,6 @@ wheels/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Temporary scratch scripts (local dev only)
+scratch/

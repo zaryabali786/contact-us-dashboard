@@ -1,20 +1,19 @@
-<div class="contact-details-container">
+<div class="contact-details-container" [class.sidebar-collapsed-mode]="isSidebarCollapsed()">
   @if (contactsService.selectedContact(); as contact) {
-    <!-- Mobile / Collapsed Navigation Bar -->
-    <div class="top-nav-bar" [class.mobile-only]="!isSidebarCollapsed()">
+    <!-- Navigation Bar: On desktop when collapsed shows menu button; on mobile shows back button -->
+    <div class="top-nav-bar" [class.show-collapsed-desktop]="isSidebarCollapsed()">
       @if (isSidebarCollapsed()) {
         <button
-          class="btn-toggle-sidebar"
+          class="header-btn btn-desktop-expand"
           type="button"
-          aria-label="Expand contacts list"
+          aria-label="Open contacts list"
           (click)="toggleSidebar.emit()"
         >
-          <app-icon name="menu" [size]="15" color="#171C26"></app-icon>
-          <span>Contacts</span>
+          <app-icon name="menu" [size]="16" color="#171C26"></app-icon>
         </button>
       }
-      <button class="btn-back" type="button" aria-label="Back to contacts list" (click)="back.emit()">
-        <app-icon name="chevron-left" [size]="16"></app-icon>
+      <button class="btn-back mobile-only" type="button" aria-label="Back to contacts list" (click)="back.emit()">
+        <app-icon name="chevron-left" [size]="16" color="#625BF7"></app-icon>
         <span>Contacts</span>
       </button>
     </div>
@@ -23,12 +22,29 @@
       <!-- Profile Header -->
       <section class="profile-header">
         <div class="profile-avatar-wrapper">
-          <img
-            [src]="contact.avatar || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80'"
-            [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
-            class="profile-avatar"
-            appImageFallback
-          />
+          @if (contact.avatar) {
+            <img
+              [src]="contact.avatar"
+              [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
+              class="profile-avatar"
+              appImageFallback
+            />
+          } @else {
+            <div class="profile-avatar placeholder-avatar" aria-label="Default avatar">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="placeholder-avatar-svg">
+                <circle cx="40" cy="40" r="37.5" stroke="#171C26" stroke-width="4.5" fill="#FFFFFF"/>
+                <circle cx="40" cy="31" r="13" fill="#171C26"/>
+                <g clip-path="url(#detailsAvatarClip)">
+                  <path d="M14 72C16 54 27 48 40 48C53 48 64 54 66 72" fill="#171C26"/>
+                </g>
+                <defs>
+                  <clipPath id="detailsAvatarClip">
+                    <circle cx="40" cy="40" r="35"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          }
         </div>
 
         <div class="profile-title-block">
@@ -42,7 +58,7 @@
           <!-- Action Buttons Bar -->
           <div class="actions-bar">
             <button class="btn-message" type="button" (click)="onMessage()">
-              <app-icon name="chat" [size]="15" color="#FFFFFF"></app-icon>
+              <img [src]="messageWhiteIcon" alt="" class="btn-message-icon" width="15" height="15" />
               <span>Message</span>
             </button>
 
@@ -52,7 +68,7 @@
               aria-label="Call contact"
               (click)="onCall()"
             >
-              <app-icon name="phone" [size]="16" color="#625BF7"></app-icon>
+              <img [src]="phoneGreyIcon" alt="Call" class="btn-action-img" width="14" height="14" />
             </button>
 
             <button
@@ -61,7 +77,7 @@
               aria-label="Meeting link"
               (click)="onMeeting()"
             >
-              <app-icon name="meeting" [size]="16" color="#7E8299"></app-icon>
+              <img [src]="calendarIcon" alt="Meeting" class="btn-action-img" width="17" height="14" />
             </button>
 
             <button
@@ -69,7 +85,7 @@
               type="button"
               aria-label="More options"
             >
-              <app-icon name="more" [size]="16" color="#7E8299"></app-icon>
+              <app-icon name="more" [size]="16" color="#8083A3"></app-icon>
             </button>
           </div>
         </div>
@@ -173,7 +189,7 @@
         </div>
 
         <!-- Social Links Row -->
-        <div class="info-row">
+        <div class="info-row social-row">
           <div class="info-label">Social</div>
           <div class="info-value">
             <div class="social-btn-group">
