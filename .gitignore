@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+backend/venv/
+.venv/
+venv/
+ENV/
+
+# Angular Builds
+frontend/dist/
+frontend/.angular/
+dist/
+.angular/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+
+# Vercel
+.vercel/
+
+# Environment local overrides
+.env
+.env.local
+.env.*.local
+
+# IDE & OS
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,313 @@
+@use 'styles/variables' as *;
+@use 'styles/mixins' as *;
+
+.contact-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: $bg-card;
+  border-right: 1px solid $border-color;
+  user-select: none;
+}
+
+/* Header Bar */
+.list-header {
+  @include flex-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border-color;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: $text-dark;
+  letter-spacing: -0.2px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+  background-color: #ffffff;
+  @include flex-center;
+  @include transition-standard;
+
+  &:hover {
+    border-color: #d1d5db;
+    background-color: #f9fafb;
+  }
+
+  &:active {
+    background-color: #f3f4f6;
+  }
+}
+
+/* Search Section */
+.search-section {
+  padding: 16px 24px;
+  border-bottom: 1px solid $border-color;
+}
+
+.search-micro-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: $text-muted;
+  margin-bottom: 6px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-dark;
+  background: transparent;
+  padding: 4px 28px 4px 0;
+
+  &::placeholder {
+    color: #9ea3b9;
+    font-weight: 400;
+  }
+}
+
+.search-icon,
+.btn-clear {
+  position: absolute;
+  right: 0;
+  @include flex-center;
+}
+
+.btn-clear {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  &:hover {
+    background-color: #f1f3f8;
+  }
+}
+
+/* Scroll Area */
+.contacts-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}
+
+/* Contact Item */
+.contact-list {
+  padding: 8px 0;
+}
+
+.contact-item {
+  @include flex-between;
+  padding: 12px 24px;
+  cursor: pointer;
+  @include transition-standard;
+  outline: none;
+
+  &:hover {
+    background-color: #f8f9fe;
+  }
+
+  &.selected {
+    background-color: #f4f3ff;
+
+    .contact-name {
+      color: $text-dark;
+      font-weight: 700;
+    }
+
+    .action-btn {
+      background-color: #eceafd;
+      border-color: transparent;
+      color: $primary-purple;
+
+      &:hover {
+        background-color: $primary-purple;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+.contact-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+.avatar-container {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.contact-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  background-color: #e5e7eb;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+
+  &.online {
+    background-color: $status-online;
+  }
+
+  &.away {
+    background-color: $status-away;
+  }
+
+  &.offline {
+    background-color: $status-offline;
+  }
+}
+
+.contact-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contact-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  @include truncate;
+}
+
+.contact-role {
+  font-size: 12px;
+  font-weight: 400;
+  color: $text-muted;
+  margin-top: 2px;
+  @include truncate;
+}
+
+/* Quick Actions */
+.contact-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  background-color: #ffffff;
+  color: $text-muted;
+  @include flex-center;
+  @include transition-standard;
+
+  &:hover {
+    border-color: #cbd5e1;
+    color: $primary-purple;
+    background-color: #ffffff;
+  }
+}
+
+/* Skeleton Loading */
+.skeleton-list {
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-row {
+  @include flex-between;
+}
+
+.skeleton-info {
+  flex: 1;
+  margin-left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* Empty & Error States */
+.empty-container,
+.error-container {
+  padding: 48px 24px;
+  text-align: center;
+  @include flex-center;
+  flex-direction: column;
+}
+
+.empty-icon {
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.empty-subtitle {
+  font-size: 13px;
+  color: $text-muted;
+  margin-top: 4px;
+}
+
+.btn-reset-search,
+.btn-retry {
+  margin-top: 14px;
+  padding: 8px 16px;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: $primary-purple;
+  color: #ffffff;
+  @include transition-standard;
+
+  &:hover {
+    background-color: $primary-purple-hover;
+  }
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 13px;
+}

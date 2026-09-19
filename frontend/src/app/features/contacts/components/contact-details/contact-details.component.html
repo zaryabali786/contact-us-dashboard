@@ -1,0 +1,240 @@
+<div class="contact-details-container">
+  @if (contactsService.selectedContact(); as contact) {
+    <!-- Mobile Back Navigation -->
+    <div class="mobile-nav-bar">
+      <button class="btn-back" type="button" (click)="back.emit()">
+        <app-icon name="chevron-left" [size]="16"></app-icon>
+        <span>Contacts</span>
+      </button>
+    </div>
+
+    <div class="details-content">
+      <!-- Profile Header -->
+      <section class="profile-header">
+        <div class="profile-avatar-wrapper">
+          <img
+            [src]="contact.avatar || contact.avatarUrl"
+            [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
+            class="profile-avatar"
+            appImageFallback
+          />
+        </div>
+
+        <div class="profile-title-block">
+          <h2 class="profile-name">
+            {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
+          </h2>
+          <p class="profile-role">
+            {{ contact.job_title || 'Professional' }}
+          </p>
+
+          <!-- Action Buttons Bar -->
+          <div class="actions-bar">
+            <button class="btn-message" type="button" (click)="onMessage()">
+              <app-icon name="chat" [size]="16" color="#FFFFFF"></app-icon>
+              <span>Message</span>
+            </button>
+
+            <button
+              class="btn-action-icon"
+              type="button"
+              aria-label="Call contact"
+              (click)="onCall()"
+            >
+              <app-icon name="phone" [size]="18" color="#625BF7"></app-icon>
+            </button>
+
+            <button
+              class="btn-action-icon"
+              type="button"
+              aria-label="Start meeting"
+              (click)="onMeeting()"
+            >
+              <app-icon name="video" [size]="18" color="#7E8299"></app-icon>
+            </button>
+
+            <button
+              class="btn-action-icon"
+              type="button"
+              aria-label="More options"
+            >
+              <app-icon name="more" [size]="18" color="#7E8299"></app-icon>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Details Sections Grid -->
+      <section class="info-grid">
+        <!-- Bio Row -->
+        @if (contact.bio) {
+          <div class="info-row">
+            <div class="info-label">Bio</div>
+            <div class="info-value bio-text">{{ contact.bio }}</div>
+          </div>
+        }
+
+        <!-- Email Addresses Row (Fetched via GET /contacts/{id}/email_addresses) -->
+        <div class="info-row">
+          <div class="info-label">Email</div>
+          <div class="info-value">
+            @if (contactsService.isLoadingEmails()) {
+              <div class="skeleton-email-group">
+                <app-skeleton width="240px" height="18px" radius="4px"></app-skeleton>
+                <app-skeleton width="190px" height="18px" radius="4px"></app-skeleton>
+              </div>
+            } @else if (contactsService.emailsError(); as err) {
+              <p class="text-error">{{ err }}</p>
+            } @else if (contactsService.selectedContactEmails().length === 0) {
+              <p class="text-empty">No email addresses recorded</p>
+            } @else {
+              <div class="email-list">
+                @for (item of contactsService.selectedContactEmails(); track item.id) {
+                  <div class="email-entry">
+                    <a [href]="'mailto:' + item.email" class="interactive-link email-link">
+                      {{ item.email }}
+                    </a>
+                    @if (item.is_primary || item.isPrimary) {
+                      <span class="pill-badge">Primary</span>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Dial Row -->
+        @if (contact.dial) {
+          <div class="info-row">
+            <div class="info-label">Dial</div>
+            <div class="info-value">
+              <a [href]="'mailto:' + contact.dial" class="interactive-link">
+                {{ contact.dial }}
+              </a>
+            </div>
+          </div>
+        }
+
+        <!-- Meeting Row -->
+        @if (contact.meeting_url || contact.meetingUrl) {
+          <div class="info-row">
+            <div class="info-label">Meeting</div>
+            <div class="info-value">
+              <a
+                [href]="contact.meeting_url || contact.meetingUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="interactive-link meeting-link"
+              >
+                {{ contact.meeting_url || contact.meetingUrl }}
+              </a>
+            </div>
+          </div>
+        }
+
+        <!-- Phone Numbers Row -->
+        <div class="info-row">
+          <div class="info-label">Phone</div>
+          <div class="info-value">
+            <div class="phone-list">
+              @if (contact.phone_numbers && contact.phone_numbers.length > 0) {
+                @for (phoneItem of contact.phone_numbers; track phoneItem.number) {
+                  <div class="phone-entry">
+                    <a [href]="'tel:' + phoneItem.number" class="interactive-link">
+                      {{ phoneItem.number | phoneFormat }}
+                    </a>
+                    @if (phoneItem.is_primary || phoneItem.isPrimary) {
+                      <span class="pill-badge">Primary</span>
+                    }
+                  </div>
+                }
+              } @else if (contact.phone) {
+                <div class="phone-entry">
+                  <a [href]="'tel:' + contact.phone" class="interactive-link">
+                    {{ contact.phone | phoneFormat }}
+                  </a>
+                  <span class="pill-badge">Primary</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Row -->
+        @if (contact.address) {
+          <div class="info-row">
+            <div class="info-label">Address</div>
+            <div class="info-value address-text">{{ contact.address }}</div>
+          </div>
+        }
+
+        <!-- Company Row -->
+        @if (contact.company) {
+          <div class="info-row">
+            <div class="info-label">Company</div>
+            <div class="info-value">{{ contact.company }}</div>
+          </div>
+        }
+
+        <!-- Social Links Row -->
+        <div class="info-row">
+          <div class="info-label">Social</div>
+          <div class="info-value">
+            <div class="social-btn-group">
+              <button
+                class="social-btn"
+                type="button"
+                aria-label="Facebook"
+                (click)="onSocial('facebook', contact.social_links?.facebook || contact.socialLinks?.facebook)"
+              >
+                <app-icon name="facebook" [size]="15"></app-icon>
+              </button>
+              <button
+                class="social-btn"
+                type="button"
+                aria-label="Pinterest"
+                (click)="onSocial('pinterest', contact.social_links?.pinterest || contact.socialLinks?.pinterest)"
+              >
+                <app-icon name="pinterest" [size]="15"></app-icon>
+              </button>
+              <button
+                class="social-btn"
+                type="button"
+                aria-label="Twitter"
+                (click)="onSocial('twitter', contact.social_links?.twitter || contact.socialLinks?.twitter)"
+              >
+                <app-icon name="twitter" [size]="15"></app-icon>
+              </button>
+              <button
+                class="social-btn"
+                type="button"
+                aria-label="LinkedIn"
+                (click)="onSocial('linkedin', contact.social_links?.linkedin || contact.socialLinks?.linkedin)"
+              >
+                <app-icon name="linkedin" [size]="15"></app-icon>
+              </button>
+              <button
+                class="social-btn"
+                type="button"
+                aria-label="Google"
+                (click)="onSocial('google', contact.social_links?.google || contact.socialLinks?.google)"
+              >
+                <app-icon name="google" [size]="15"></app-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  } @else {
+    <!-- Empty state when no contact is selected -->
+    <div class="no-selection-container">
+      <div class="no-selection-card">
+        <app-icon name="chat" [size]="48" color="#C7D2FE"></app-icon>
+        <h3>No Contact Selected</h3>
+        <p>Choose a contact from the list on the left to view their complete profile and contact information.</p>
+      </div>
+    </div>
+  }
+</div>

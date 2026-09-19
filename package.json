@@ -1,0 +1,13 @@
+{
+  "name": "contact-management-dashboard-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Contact Management Dashboard - Angular & TypeScript Frontend with Flask REST API",
+  "scripts": {
+    "start:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "test:frontend": "cd frontend && npm test -- --watch=false --browsers=ChromeHeadless",
+    "start:backend": "python backend/run.py",
+    "test:backend": "pytest backend/tests"
+  }
+}
