@@ -9,20 +9,10 @@
     </div>
 
     <div class="header-right">
-      <button
-        class="header-btn"
-        aria-label="Previous contact"
-        type="button"
-        (click)="onPrev()"
-      >
+      <button class="header-btn" aria-label="Previous contact" type="button" (click)="onPrev()">
         <app-icon name="chevron-left" [size]="15" color="#848E9C"></app-icon>
       </button>
-      <button
-        class="header-btn"
-        aria-label="Next contact"
-        type="button"
-        (click)="onNext()"
-      >
+      <button class="header-btn" aria-label="Next contact" type="button" (click)="onNext()">
         <app-icon name="chevron-right" [size]="15" color="#848E9C"></app-icon>
       </button>
     </div>
@@ -32,24 +22,17 @@
   <section class="search-section">
     <label class="search-micro-label" for="contact-search-input">Search for a contact</label>
     <div class="search-input-wrapper">
-      <input
-        #searchInput
-        id="contact-search-input"
-        type="text"
-        class="search-input"
-        placeholder="Name, email or phone number"
-        [value]="searchInputValue"
-        (input)="onSearchChange(searchInput.value)"
-        autocomplete="off"
-      />
+      <input #searchInput id="contact-search-input" type="text" class="search-input"
+        placeholder="Name, email or phone number" [value]="searchInputValue" (input)="onSearchChange(searchInput.value)"
+        autocomplete="off" />
       @if (searchInputValue) {
-        <button class="btn-clear" type="button" aria-label="Clear search" (click)="clearSearch()">
-          <app-icon name="close" [size]="13" color="#8D96A5"></app-icon>
-        </button>
+      <button class="btn-clear" type="button" aria-label="Clear search" (click)="clearSearch()">
+        <app-icon name="close" [size]="13" color="#8D96A5"></app-icon>
+      </button>
       } @else {
-        <span class="search-icon">
-          <app-icon name="search" [size]="15" color="#171C26"></app-icon>
-        </span>
+      <span class="search-icon">
+        <app-icon name="search" [size]="15" color="#171C26"></app-icon>
+      </span>
       }
     </div>
   </section>
@@ -58,156 +41,107 @@
   <div class="contacts-scroll-area">
     <!-- Loading Skeletons -->
     @if (contactsService.isLoadingContacts()) {
-      <div class="skeleton-list">
-        @for (i of [1, 2, 3, 4, 5, 6, 7]; track i) {
-          <div class="skeleton-row">
-            <app-skeleton width="40px" height="40px" radius="12px"></app-skeleton>
-            <div class="skeleton-info">
-              <app-skeleton width="120px" height="14px" radius="4px"></app-skeleton>
-              <app-skeleton width="80px" height="12px" radius="4px"></app-skeleton>
-            </div>
-            <div class="skeleton-actions">
-              <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
-              <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
-              <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
-            </div>
-          </div>
-        }
+    <div class="skeleton-list">
+      @for (i of [1, 2, 3, 4, 5, 6, 7]; track i) {
+      <div class="skeleton-row">
+        <app-skeleton width="40px" height="40px" radius="12px"></app-skeleton>
+        <div class="skeleton-info">
+          <app-skeleton width="120px" height="14px" radius="4px"></app-skeleton>
+          <app-skeleton width="80px" height="12px" radius="4px"></app-skeleton>
+        </div>
+        <div class="skeleton-actions">
+          <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
+          <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
+          <app-skeleton width="32px" height="32px" radius="8px"></app-skeleton>
+        </div>
       </div>
+      }
+    </div>
     }
 
     <!-- Error State -->
     @else if (contactsService.contactsError(); as err) {
-      <div class="error-container">
-        <p class="error-message">{{ err }}</p>
-        <button class="btn-retry" type="button" (click)="contactsService.loadContacts().subscribe()">
-          Retry
-        </button>
-      </div>
+    <div class="error-container">
+      <p class="error-message">{{ err }}</p>
+      <button class="btn-retry" type="button" (click)="contactsService.loadContacts().subscribe()">
+        Retry
+      </button>
+    </div>
     }
 
     <!-- Empty Search Results -->
     @else if (contactsService.contacts().length === 0) {
-      <div class="empty-container">
-        <div class="empty-icon">
-          <app-icon name="search" [size]="32" color="#8D96A5"></app-icon>
-        </div>
-        <p class="empty-title">No contacts found</p>
-        <p class="empty-subtitle">
-          @if (searchInputValue) {
-            No results matching "{{ searchInputValue }}"
-          } @else {
-            There are no contacts available.
-          }
-        </p>
-        @if (searchInputValue) {
-          <button class="btn-reset-search" type="button" (click)="clearSearch()">
-            Clear search
-          </button>
-        }
+    <div class="empty-container">
+      <div class="empty-icon">
+        <app-icon name="search" [size]="32" color="#8D96A5"></app-icon>
       </div>
+      <p class="empty-title">No contacts found</p>
+      <p class="empty-subtitle">
+        @if (searchInputValue) {
+        No results matching "{{ searchInputValue }}"
+        } @else {
+        There are no contacts available.
+        }
+      </p>
+      @if (searchInputValue) {
+      <button class="btn-reset-search" type="button" (click)="clearSearch()">
+        Clear search
+      </button>
+      }
+    </div>
     }
 
     <!-- Contact List Items -->
     @else {
-      <ul class="contact-list" role="list">
-        @for (contact of contactsService.contacts(); track contact.id) {
-          <li
-            class="contact-item"
-            [class.selected]="contact.id === contactsService.selectedContactId()"
-            (click)="selectContact(contact)"
-            tabindex="0"
-            role="button"
-            (keydown.enter)="selectContact(contact)"
-            (keydown.space)="selectContact(contact)"
-          >
-            <!-- Left: Avatar / Status indicator + Text -->
-            <div class="contact-profile">
-              <div class="avatar-container">
-                @if (contact.avatar) {
-                  <img
-                    [src]="contact.avatar"
-                    [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
-                    class="contact-avatar"
-                    appImageFallback
-                  />
-                } @else {
-                  <div class="contact-avatar placeholder-avatar" aria-label="Default avatar">
-                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="placeholder-avatar-svg">
-                      <circle cx="40" cy="40" r="37.5" stroke="#171C26" stroke-width="5" fill="#FFFFFF"/>
-                      <circle cx="40" cy="31" r="13" fill="#171C26"/>
-                      <g [attr.clip-path]="'url(#listAvatarClip-' + contact.id + ')'">
-                        <path d="M14 72C16 54 27 48 40 48C53 48 64 54 66 72" fill="#171C26"/>
-                      </g>
-                      <defs>
-                        <clipPath [id]="'listAvatarClip-' + contact.id">
-                          <circle cx="40" cy="40" r="35"/>
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </div>
-                }
-                <span
-                  class="status-dot"
-                  [class.online]="contact.status === 'online'"
-                  [class.away]="contact.status === 'away'"
-                  [class.offline]="contact.status === 'offline'"
-                ></span>
-              </div>
+    <ul class="contact-list" role="list">
+      @for (contact of contactsService.contacts(); track contact.id) {
+      <li class="contact-item" [class.selected]="contact.id === contactsService.selectedContactId()"
+        (click)="selectContact(contact)" tabindex="0" role="button" (keydown.enter)="selectContact(contact)"
+        (keydown.space)="selectContact(contact)">
+        <!-- Left: Avatar / Status indicator + Text -->
+        <div class="contact-profile">
+          <div class="avatar-container">
+            @if (contact.avatar) {
+            <img [src]="contact.avatar" [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
+              class="contact-avatar" appImageFallback />
+            } @else {
+            <div class=" placeholder-avatar" aria-label="Default avatar">
 
-              <div class="contact-meta">
-                <span class="contact-name">
-                  {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
-                </span>
-                <span class="contact-role">
-                  {{ contact.list_role || contact.job_title || 'Developer' }}
-                </span>
-              </div>
             </div>
+            }
+            <span class="status-dot" [class.online]="contact.status === 'online'"
+              [class.away]="contact.status === 'away'" [class.offline]="contact.status === 'offline'"></span>
+          </div>
 
-            <!-- Right: Quick Actions (Chat, Phone, More) -->
-            <div class="contact-actions" (click)="$event.stopPropagation()">
-              <button
-                class="action-btn chat-btn"
-                type="button"
-                [attr.aria-label]="'Message ' + contact.first_name"
-                (click)="onRowAction('chat', contact, $event)"
-              >
-                <img
-                  class="chat-img unselected"
-                  [src]="chatUnselectedIcon"
-                  alt="Chat"
-                  width="15"
-                  height="15"
-                />
-                <img
-                  class="chat-img selected"
-                  [src]="chatSelectedIcon"
-                  alt="Chat"
-                  width="15"
-                  height="15"
-                />
-              </button>
-              <button
-                class="action-btn phone-btn"
-                type="button"
-                [attr.aria-label]="'Call ' + contact.first_name"
-                (click)="onRowAction('phone', contact, $event)"
-              >
-                <app-icon name="phone" [size]="14"></app-icon>
-              </button>
-              <button
-                class="action-btn more-btn"
-                type="button"
-                [attr.aria-label]="'More options for ' + contact.first_name"
-                (click)="onRowAction('more', contact, $event)"
-              >
-                <app-icon name="more" [size]="14"></app-icon>
-              </button>
-            </div>
-          </li>
-        }
-      </ul>
+          <div class="contact-meta">
+            <span class="contact-name">
+              {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
+            </span>
+            <span class="contact-role">
+              {{ contact.list_role || contact.job_title || 'Developer' }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Quick Actions (Chat, Phone, More) -->
+        <div class="contact-actions" (click)="$event.stopPropagation()">
+          <button class="action-btn chat-btn" type="button" [attr.aria-label]="'Message ' + contact.first_name"
+            (click)="onRowAction('chat', contact, $event)">
+            <img class="chat-img unselected" [src]="chatUnselectedIcon" alt="Chat" width="15" height="15" />
+            <img class="chat-img selected" [src]="chatSelectedIcon" alt="Chat" width="15" height="15" />
+          </button>
+          <button class="action-btn phone-btn" type="button" [attr.aria-label]="'Call ' + contact.first_name"
+            (click)="onRowAction('phone', contact, $event)">
+            <app-icon name="phone" [size]="14"></app-icon>
+          </button>
+          <button class="action-btn more-btn" type="button" [attr.aria-label]="'More options for ' + contact.first_name"
+            (click)="onRowAction('more', contact, $event)">
+            <app-icon name="more" [size]="14"></app-icon>
+          </button>
+        </div>
+      </li>
+      }
+    </ul>
     }
   </div>
 </div>

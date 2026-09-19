@@ -1,250 +1,197 @@
 <div class="contact-details-container" [class.sidebar-collapsed-mode]="isSidebarCollapsed()">
   @if (contactsService.selectedContact(); as contact) {
-    <!-- Navigation Bar: On desktop when collapsed shows menu button; on mobile shows back button -->
-    <div class="top-nav-bar" [class.show-collapsed-desktop]="isSidebarCollapsed()">
-      @if (isSidebarCollapsed()) {
-        <button
-          class="header-btn btn-desktop-expand"
-          type="button"
-          aria-label="Open contacts list"
-          (click)="toggleSidebar.emit()"
-        >
-          <app-icon name="menu" [size]="16" color="#171C26"></app-icon>
-        </button>
-      }
-      <button class="btn-back mobile-only" type="button" aria-label="Back to contacts list" (click)="back.emit()">
-        <app-icon name="chevron-left" [size]="16" color="#625BF7"></app-icon>
-        <span>Contacts</span>
-      </button>
-    </div>
+  <!-- Navigation Bar: On desktop when collapsed shows menu button; on mobile shows back button -->
+  <div class="top-nav-bar" [class.show-collapsed-desktop]="isSidebarCollapsed()">
+    @if (isSidebarCollapsed()) {
+    <button class="header-btn btn-desktop-expand" type="button" aria-label="Open contacts list"
+      (click)="toggleSidebar.emit()">
+      <app-icon name="menu" [size]="16" color="#171C26"></app-icon>
+    </button>
+    }
+    <button class="btn-back mobile-only" type="button" aria-label="Back to contacts list" (click)="back.emit()">
+      <app-icon name="chevron-left" [size]="16" color="#625BF7"></app-icon>
+      <span>Contacts</span>
+    </button>
+  </div>
 
-    <div class="details-content">
-      <!-- Profile Header -->
-      <section class="profile-header">
-        <div class="profile-avatar-wrapper">
-          @if (contact.avatar) {
-            <img
-              [src]="contact.avatar"
-              [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
-              class="profile-avatar"
-              appImageFallback
-            />
-          } @else {
-            <div class="profile-avatar placeholder-avatar" aria-label="Default avatar">
-              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="placeholder-avatar-svg">
-                <circle cx="40" cy="40" r="37.5" stroke="#171C26" stroke-width="4.5" fill="#FFFFFF"/>
-                <circle cx="40" cy="31" r="13" fill="#171C26"/>
-                <g clip-path="url(#detailsAvatarClip)">
-                  <path d="M14 72C16 54 27 48 40 48C53 48 64 54 66 72" fill="#171C26"/>
-                </g>
-                <defs>
-                  <clipPath id="detailsAvatarClip">
-                    <circle cx="40" cy="40" r="35"/>
-                  </clipPath>
-                </defs>
-              </svg>
-            </div>
-          }
-        </div>
+  <div class="details-content">
+    <!-- Profile Header -->
+    <section class="profile-header">
+      <div class="profile-avatar-wrapper">
 
-        <div class="profile-title-block">
-          <h2 class="profile-name">
-            {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
-          </h2>
-          <p class="profile-role">
-            {{ contact.job_title || 'UI/UX Designer' }}
-          </p>
-
-          <!-- Action Buttons Bar -->
-          <div class="actions-bar">
-            <button class="btn-message" type="button" (click)="onMessage()">
-              <img [src]="messageWhiteIcon" alt="" class="btn-message-icon" width="15" height="15" />
-              <span>Message</span>
-            </button>
-
-            <button
-              class="btn-action-icon"
-              type="button"
-              aria-label="Call contact"
-              (click)="onCall()"
-            >
-              <img [src]="phoneGreyIcon" alt="Call" class="btn-action-img" width="14" height="14" />
-            </button>
-
-            <button
-              class="btn-action-icon"
-              type="button"
-              aria-label="Meeting link"
-              (click)="onMeeting()"
-            >
-              <img [src]="calendarIcon" alt="Meeting" class="btn-action-img" width="17" height="14" />
-            </button>
-
-            <button
-              class="btn-action-icon"
-              type="button"
-              aria-label="More options"
-            >
-              <app-icon name="more" [size]="16" color="#8083A3"></app-icon>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Details Sections Grid (Exact Figma Order) -->
-      <section class="info-grid">
-        <!-- Bio Row -->
-        @if (contact.bio) {
-          <div class="info-row">
-            <div class="info-label">Bio</div>
-            <div class="info-value bio-text">{{ contact.bio }}</div>
+        @if (contact.avatar) {
+          <img [src]="contact.avatar"
+            [alt]="contact.name || (contact.first_name + ' ' + contact.last_name)"
+            class="profile-avatar" appImageFallback />
+        } @else {
+          <div class="profile-avatar initials-avatar"
+            [attr.data-initials]="getInitials(contact)">
+            <span class="initials-text">{{ getInitials(contact) }}</span>
           </div>
         }
 
-        <!-- Email Addresses Row (Retrieved via GET /contacts/{id}/email_addresses) -->
-        <div class="info-row">
-          <div class="info-label">Email</div>
-          <div class="info-value">
-            @if (contactsService.isLoadingEmails()) {
-              <div class="skeleton-email-group">
-                <app-skeleton width="220px" height="16px" radius="4px"></app-skeleton>
-                <app-skeleton width="180px" height="16px" radius="4px"></app-skeleton>
-              </div>
-            } @else if (contactsService.emailsError(); as err) {
-              <p class="text-error">{{ err }}</p>
-            } @else if (contactsService.selectedContactEmails().length === 0) {
-              <p class="text-empty">No email addresses found</p>
-            } @else {
-              <div class="email-list">
-                @for (item of contactsService.selectedContactEmails(); track item.id) {
-                  <div class="email-entry">
-                    <a [href]="'mailto:' + item.email" class="interactive-link email-link">
-                      {{ item.email }}
-                    </a>
-                    @if (item.is_primary || item.isPrimary) {
-                      <span class="pill-badge">Primary</span>
-                    }
-                  </div>
-                }
-              </div>
+      </div>
+
+      <div class="profile-title-block">
+        <h2 class="profile-name">
+          {{ contact.name || (contact.first_name + ' ' + contact.last_name) }}
+        </h2>
+        <p class="profile-role">
+          {{ contact.job_title || 'UI/UX Designer' }}
+        </p>
+
+        <!-- Action Buttons Bar -->
+        <div class="actions-bar">
+          <button class="btn-message" type="button" (click)="onMessage()">
+            <img [src]="messageWhiteIcon" alt="" class="btn-message-icon" width="15" height="15" />
+            <span>Message</span>
+          </button>
+
+          <button class="btn-action-icon" type="button" aria-label="Call contact" (click)="onCall()">
+            <img [src]="phoneGreyIcon" alt="Call" class="btn-action-img" width="14" height="14" />
+          </button>
+
+          <button class="btn-action-icon" type="button" aria-label="Meeting link" (click)="onMeeting()">
+            <img [src]="calendarIcon" alt="Meeting" class="btn-action-img" width="17" height="14" />
+          </button>
+
+          <button class="btn-action-icon" type="button" aria-label="More options">
+            <app-icon name="more" [size]="16" color="#8083A3"></app-icon>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details Sections Grid (Exact Figma Order) -->
+    <section class="info-grid">
+      <!-- Bio Row -->
+      @if (contact.bio) {
+      <div class="info-row">
+        <div class="info-label">Bio</div>
+        <div class="info-value bio-text">{{ contact.bio }}</div>
+      </div>
+      }
+
+      <!-- Email Addresses Row (Retrieved via GET /contacts/{id}/email_addresses) -->
+      <div class="info-row">
+        <div class="info-label">Email</div>
+        <div class="info-value">
+          @if (contactsService.isLoadingEmails()) {
+          <div class="skeleton-email-group">
+            <app-skeleton width="220px" height="16px" radius="4px"></app-skeleton>
+            <app-skeleton width="180px" height="16px" radius="4px"></app-skeleton>
+          </div>
+          } @else if (contactsService.emailsError(); as err) {
+          <p class="text-error">{{ err }}</p>
+          } @else if (contactsService.selectedContactEmails().length === 0) {
+          <p class="text-empty">No email addresses found</p>
+          } @else {
+          <div class="email-list">
+            @for (item of contactsService.selectedContactEmails(); track item.id) {
+            <div class="email-entry">
+              <a [href]="'mailto:' + item.email" class="interactive-link email-link">
+                {{ item.email }}
+              </a>
+              @if (item.is_primary || item.isPrimary) {
+              <span class="pill-badge">Primary</span>
+              }
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Dial Row -->
+      @if (contact.dial) {
+      <div class="info-row">
+        <div class="info-label">Dial</div>
+        <div class="info-value">
+          <a [href]="'mailto:' + contact.dial" class="interactive-link">
+            {{ contact.dial }}
+          </a>
+        </div>
+      </div>
+      }
+
+      <!-- Meeting Row -->
+      @if (contact.meeting_url || contact.meetingUrl) {
+      <div class="info-row">
+        <div class="info-label">Meeting</div>
+        <div class="info-value">
+          <a [href]="contact.meeting_url || contact.meetingUrl" target="_blank" rel="noopener noreferrer"
+            class="interactive-link meeting-link">
+            {{ contact.meeting_url || contact.meetingUrl }}
+          </a>
+        </div>
+      </div>
+      }
+
+      <!-- Phone Numbers Row -->
+      <div class="info-row">
+        <div class="info-label">Phone</div>
+        <div class="info-value">
+          <div class="phone-list">
+            @if (contact.phone_numbers && contact.phone_numbers.length > 0) {
+            @for (phoneItem of contact.phone_numbers; track phoneItem.number) {
+            <div class="phone-entry">
+              <a [href]="'tel:' + phoneItem.number" class="interactive-link">
+                {{ phoneItem.number | phoneFormat }}
+              </a>
+              @if (phoneItem.is_primary || phoneItem.isPrimary) {
+              <span class="pill-badge">Primary</span>
+              }
+            </div>
+            }
+            } @else if (contact.phone) {
+            <div class="phone-entry">
+              <a [href]="'tel:' + contact.phone" class="interactive-link">
+                {{ contact.phone | phoneFormat }}
+              </a>
+              <span class="pill-badge">Primary</span>
+            </div>
             }
           </div>
         </div>
-
-        <!-- Dial Row -->
-        @if (contact.dial) {
-          <div class="info-row">
-            <div class="info-label">Dial</div>
-            <div class="info-value">
-              <a [href]="'mailto:' + contact.dial" class="interactive-link">
-                {{ contact.dial }}
-              </a>
-            </div>
-          </div>
-        }
-
-        <!-- Meeting Row -->
-        @if (contact.meeting_url || contact.meetingUrl) {
-          <div class="info-row">
-            <div class="info-label">Meeting</div>
-            <div class="info-value">
-              <a
-                [href]="contact.meeting_url || contact.meetingUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="interactive-link meeting-link"
-              >
-                {{ contact.meeting_url || contact.meetingUrl }}
-              </a>
-            </div>
-          </div>
-        }
-
-        <!-- Phone Numbers Row -->
-        <div class="info-row">
-          <div class="info-label">Phone</div>
-          <div class="info-value">
-            <div class="phone-list">
-              @if (contact.phone_numbers && contact.phone_numbers.length > 0) {
-                @for (phoneItem of contact.phone_numbers; track phoneItem.number) {
-                  <div class="phone-entry">
-                    <a [href]="'tel:' + phoneItem.number" class="interactive-link">
-                      {{ phoneItem.number | phoneFormat }}
-                    </a>
-                    @if (phoneItem.is_primary || phoneItem.isPrimary) {
-                      <span class="pill-badge">Primary</span>
-                    }
-                  </div>
-                }
-              } @else if (contact.phone) {
-                <div class="phone-entry">
-                  <a [href]="'tel:' + contact.phone" class="interactive-link">
-                    {{ contact.phone | phoneFormat }}
-                  </a>
-                  <span class="pill-badge">Primary</span>
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-
-        <!-- Social Links Row -->
-        <div class="info-row social-row">
-          <div class="info-label">Social</div>
-          <div class="info-value">
-            <div class="social-btn-group">
-              <button
-                class="social-btn"
-                type="button"
-                aria-label="Facebook"
-                (click)="onSocial('facebook', contact.social_links?.facebook || contact.socialLinks?.facebook)"
-              >
-                <app-icon name="facebook" [size]="14"></app-icon>
-              </button>
-              <button
-                class="social-btn"
-                type="button"
-                aria-label="Pinterest"
-                (click)="onSocial('pinterest', contact.social_links?.pinterest || contact.socialLinks?.pinterest)"
-              >
-                <app-icon name="pinterest" [size]="14"></app-icon>
-              </button>
-              <button
-                class="social-btn"
-                type="button"
-                aria-label="Twitter"
-                (click)="onSocial('twitter', contact.social_links?.twitter || contact.socialLinks?.twitter)"
-              >
-                <app-icon name="twitter" [size]="14"></app-icon>
-              </button>
-              <button
-                class="social-btn"
-                type="button"
-                aria-label="LinkedIn"
-                (click)="onSocial('linkedin', contact.social_links?.linkedin || contact.socialLinks?.linkedin)"
-              >
-                <app-icon name="linkedin" [size]="14"></app-icon>
-              </button>
-              <button
-                class="social-btn"
-                type="button"
-                aria-label="Google"
-                (click)="onSocial('google', contact.social_links?.google || contact.socialLinks?.google)"
-              >
-                <app-icon name="google" [size]="14"></app-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  } @else {
-    <div class="no-selection-container">
-      <div class="no-selection-card">
-        <app-icon name="chat" [size]="48" color="#C7D2FE"></app-icon>
-        <h3>No Contact Selected</h3>
-        <p>Select a contact from the list on the left to view profile details.</p>
       </div>
+
+      <!-- Social Links Row -->
+      <div class="info-row social-row">
+        <div class="info-label">Social</div>
+        <div class="info-value">
+          <div class="social-btn-group">
+            <button class="social-btn" type="button" aria-label="Facebook"
+              (click)="onSocial('facebook', contact.social_links?.facebook || contact.socialLinks?.facebook)">
+              <app-icon name="facebook" [size]="14"></app-icon>
+            </button>
+            <button class="social-btn" type="button" aria-label="Pinterest"
+              (click)="onSocial('pinterest', contact.social_links?.pinterest || contact.socialLinks?.pinterest)">
+              <app-icon name="pinterest" [size]="14"></app-icon>
+            </button>
+            <button class="social-btn" type="button" aria-label="Twitter"
+              (click)="onSocial('twitter', contact.social_links?.twitter || contact.socialLinks?.twitter)">
+              <app-icon name="twitter" [size]="14"></app-icon>
+            </button>
+            <button class="social-btn" type="button" aria-label="LinkedIn"
+              (click)="onSocial('linkedin', contact.social_links?.linkedin || contact.socialLinks?.linkedin)">
+              <app-icon name="linkedin" [size]="14"></app-icon>
+            </button>
+            <button class="social-btn" type="button" aria-label="Google"
+              (click)="onSocial('google', contact.social_links?.google || contact.socialLinks?.google)">
+              <app-icon name="google" [size]="14"></app-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  } @else {
+  <div class="no-selection-container">
+    <div class="no-selection-card">
+      <app-icon name="chat" [size]="48" color="#C7D2FE"></app-icon>
+      <h3>No Contact Selected</h3>
+      <p>Select a contact from the list on the left to view profile details.</p>
     </div>
+  </div>
   }
 </div>

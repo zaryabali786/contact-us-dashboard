@@ -59,4 +59,19 @@ export class ContactDetailsComponent {
       window.open(url, '_blank');
     }
   }
+
+  getInitials(contact: any): string {
+    const firstName = contact.first_name || '';
+    const lastName = contact.last_name || '';
+    if (firstName || lastName) {
+      return (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+    }
+    // fallback: use name field
+    const name: string = contact.name || '';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+    }
+    return name.charAt(0).toUpperCase() || '?';
+  }
 }

@@ -189,6 +189,24 @@
       display: block;
     }
   }
+
+  &.initials-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #625bf7 0%, #8b83fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(98, 91, 247, 0.25);
+
+    .initials-text {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      line-height: 1;
+      user-select: none;
+    }
+  }
 }
 
 .profile-title-block {
