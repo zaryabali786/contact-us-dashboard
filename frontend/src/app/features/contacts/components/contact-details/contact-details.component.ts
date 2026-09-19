@@ -1,4 +1,4 @@
-import { Component, output, inject } from '@angular/core';
+import { Component, output, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -23,6 +23,8 @@ export class ContactDetailsComponent {
   protected readonly contactsService = inject(ContactsService);
 
   readonly back = output<void>();
+  readonly toggleSidebar = output<void>();
+  readonly isSidebarCollapsed = input<boolean>(false);
 
   onMessage(): void {
     const contact = this.contactsService.selectedContact();

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ContactsService } from '../../services/contacts.service';
@@ -22,8 +22,14 @@ import { ImageFallbackDirective } from '../../../../shared/directives/image-fall
 })
 export class ContactListComponent implements OnInit {
   protected readonly contactsService = inject(ContactsService);
+  readonly contactSelected = output<Contact>();
+  readonly menuClicked = output<void>();
 
   searchInputValue = '';
+
+  toggleMenu(): void {
+    this.menuClicked.emit();
+  }
 
   ngOnInit(): void {
     // Initial fetch from GET /contacts via ContactsService
@@ -42,6 +48,7 @@ export class ContactListComponent implements OnInit {
 
   selectContact(contact: Contact): void {
     this.contactsService.selectContact(contact.id);
+    this.contactSelected.emit(contact);
   }
 
   onPrev(): void {

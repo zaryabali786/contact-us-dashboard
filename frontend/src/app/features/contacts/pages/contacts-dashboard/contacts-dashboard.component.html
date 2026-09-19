@@ -1,13 +1,24 @@
 <div class="dashboard-wrapper">
   <main class="dashboard-card" [class.mobile-detail-active]="isMobileDetailOpen()">
-    <!-- Master Contact List Pane -->
-    <aside class="pane-list" [class.hidden-on-mobile]="isMobileDetailOpen()">
-      <app-contact-list></app-contact-list>
+    <!-- Master Contact List Pane (Sidebar) -->
+    <aside
+      class="pane-list"
+      [class.hidden-on-mobile]="isMobileDetailOpen()"
+      [class.sidebar-collapsed]="isSidebarCollapsed()"
+    >
+      <app-contact-list
+        (contactSelected)="onContactSelected($event)"
+        (menuClicked)="onToggleSidebar()"
+      ></app-contact-list>
     </aside>
 
     <!-- Detail Profile Pane -->
     <section class="pane-detail" [class.visible-on-mobile]="isMobileDetailOpen()">
-      <app-contact-details (back)="onBackToList()"></app-contact-details>
+      <app-contact-details
+        [isSidebarCollapsed]="isSidebarCollapsed()"
+        (back)="onBackToList()"
+        (toggleSidebar)="onToggleSidebar()"
+      ></app-contact-details>
     </section>
   </main>
 </div>

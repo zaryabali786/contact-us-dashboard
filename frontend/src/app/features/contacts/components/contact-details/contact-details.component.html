@@ -1,8 +1,19 @@
 <div class="contact-details-container">
   @if (contactsService.selectedContact(); as contact) {
-    <!-- Mobile Back Navigation Button -->
-    <div class="mobile-nav-bar">
-      <button class="btn-back" type="button" (click)="back.emit()">
+    <!-- Mobile / Collapsed Navigation Bar -->
+    <div class="top-nav-bar" [class.mobile-only]="!isSidebarCollapsed()">
+      @if (isSidebarCollapsed()) {
+        <button
+          class="btn-toggle-sidebar"
+          type="button"
+          aria-label="Expand contacts list"
+          (click)="toggleSidebar.emit()"
+        >
+          <app-icon name="menu" [size]="15" color="#171C26"></app-icon>
+          <span>Contacts</span>
+        </button>
+      }
+      <button class="btn-back" type="button" aria-label="Back to contacts list" (click)="back.emit()">
         <app-icon name="chevron-left" [size]="16"></app-icon>
         <span>Contacts</span>
       </button>

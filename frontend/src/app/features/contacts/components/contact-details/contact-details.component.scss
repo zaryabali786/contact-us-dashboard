@@ -1,15 +1,27 @@
 @use 'styles/variables' as *;
 @use 'styles/mixins' as *;
 
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .contact-details-container {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
   background-color: #ffffff;
   @include custom-scrollbar;
   padding: 56px 64px 48px 64px;
 
+  @include laptop {
+    padding: 40px 48px 36px 48px;
+  }
+
   @include tablet {
-    padding: 32px 28px;
+    padding: 28px 24px;
   }
 
   @include mobile {
@@ -17,16 +29,23 @@
   }
 }
 
-/* Mobile Back Button */
-.mobile-nav-bar {
-  display: none;
+/* Navigation Bar (Mobile back button & sidebar expand toggle) */
+.top-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 24px;
 
-  @include tablet {
-    display: block;
+  &.mobile-only {
+    display: none;
+
+    @include mobile {
+      display: flex;
+    }
   }
 }
 
+.btn-toggle-sidebar,
 .btn-back {
   display: inline-flex;
   align-items: center;
@@ -34,18 +53,24 @@
   font-size: 13px;
   font-weight: 600;
   color: #625bf7;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
   background-color: #f4f3ff;
+  border: 1px solid #ebeff4;
   @include transition-standard;
 
   &:hover {
     background-color: #eceafd;
   }
+
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 .details-content {
   max-width: 620px;
+  width: 100%;
 }
 
 /* Profile Header Section */
@@ -53,14 +78,19 @@
   display: flex;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
+
+  @include tablet {
+    gap: 18px;
+    margin-bottom: 32px;
+  }
 
   @include mobile {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
 }
 
@@ -70,9 +100,14 @@
   height: 80px;
   flex-shrink: 0;
 
+  @include tablet {
+    width: 72px;
+    height: 72px;
+  }
+
   @include mobile {
-    width: 88px;
-    height: 88px;
+    width: 84px;
+    height: 84px;
   }
 }
 
@@ -100,6 +135,14 @@
   font-weight: 700;
   color: #171c26;
   letter-spacing: -0.2px;
+
+  @include tablet {
+    font-size: 20px;
+  }
+
+  @include mobile {
+    font-size: 22px;
+  }
 }
 
 .profile-role {
@@ -167,7 +210,15 @@
 .info-grid {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 28px;
+
+  @include tablet {
+    gap: 22px;
+  }
+
+  @include mobile {
+    gap: 20px;
+  }
 }
 
 .info-row {
@@ -177,7 +228,7 @@
 
   @include mobile {
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 }
 
@@ -188,6 +239,20 @@
   font-weight: 500;
   color: #8d96a5;
   padding-top: 1px;
+
+  @include tablet {
+    width: 75px;
+  }
+
+  @include mobile {
+    width: 100%;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    color: #9aa1b0;
+    padding-top: 0;
+  }
 }
 
 .info-value {
@@ -195,6 +260,8 @@
   font-size: 13px;
   color: #2e3345;
   min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .bio-text {
@@ -206,6 +273,7 @@
 .interactive-link {
   color: #2e3345;
   text-decoration: none;
+  overflow-wrap: anywhere;
   word-break: break-all;
   @include transition-standard;
 
@@ -230,7 +298,7 @@
 .phone-entry {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -255,7 +323,7 @@
 .social-btn-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 

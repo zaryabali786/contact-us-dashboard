@@ -1,8 +1,9 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactListComponent } from '../../components/contact-list/contact-list.component';
 import { ContactDetailsComponent } from '../../components/contact-details/contact-details.component';
 import { ContactsService } from '../../services/contacts.service';
+import { Contact } from '../../../../core/models/contact.model';
 
 @Component({
   selector: 'app-contacts-dashboard',
@@ -18,18 +19,20 @@ import { ContactsService } from '../../services/contacts.service';
 export class ContactsDashboardComponent {
   protected readonly contactsService = inject(ContactsService);
   readonly isMobileDetailOpen = signal<boolean>(false);
+  readonly isSidebarCollapsed = signal<boolean>(false);
 
-  constructor() {
-    // When selectedContact changes on mobile, automatically show details
-    effect(() => {
-      const selected = this.contactsService.selectedContact();
-      if (selected && typeof window !== 'undefined' && window.innerWidth < 1024) {
-        this.isMobileDetailOpen.set(true);
-      }
-    });
+  onContactSelected(contact: Contact): void {
+    // When viewport is in mobile single-pane mode, navigate to detail view
+    if (typeof window !== 'undefined' && window.innerWidth <= 767) {
+      this.isMobileDetailOpen.set(true);
+    }
   }
 
   onBackToList(): void {
     this.isMobileDetailOpen.set(false);
+  }
+
+  onToggleSidebar(): void {
+    this.isSidebarCollapsed.update(v => !v);
   }
 }
