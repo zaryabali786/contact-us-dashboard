@@ -5,16 +5,20 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $bg-card;
-  border-right: 1px solid $border-color;
+  background-color: #fbfcff;
+  border-right: 1px solid #edf0f5;
   user-select: none;
 }
 
 /* Header Bar */
 .list-header {
   @include flex-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid $border-color;
+  padding: 24px 36px 20px 36px;
+  border-bottom: 1px solid #edf0f5;
+
+  @include mobile {
+    padding: 16px 20px;
+  }
 }
 
 .header-left {
@@ -26,7 +30,7 @@
 .header-title {
   font-size: 20px;
   font-weight: 700;
-  color: $text-dark;
+  color: #171c26;
   letter-spacing: -0.2px;
 }
 
@@ -39,8 +43,8 @@
 .header-btn {
   width: 36px;
   height: 36px;
-  border: 1px solid $border-color;
-  border-radius: $radius-sm;
+  border: 1px solid #ebeff4;
+  border-radius: 8px;
   background-color: #ffffff;
   @include flex-center;
   @include transition-standard;
@@ -57,15 +61,19 @@
 
 /* Search Section */
 .search-section {
-  padding: 16px 24px;
-  border-bottom: 1px solid $border-color;
+  padding: 22px 36px 14px 36px;
+  border-bottom: 1px solid #edf0f5;
+
+  @include mobile {
+    padding: 16px 20px;
+  }
 }
 
 .search-micro-label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  color: $text-muted;
+  color: #9aa1b0;
   margin-bottom: 6px;
 }
 
@@ -77,15 +85,16 @@
 
 .search-input {
   width: 100%;
-  font-size: 14px;
-  font-weight: 500;
-  color: $text-dark;
+  font-size: 15px;
+  font-weight: 600;
+  color: #171c26;
   background: transparent;
   padding: 4px 28px 4px 0;
 
   &::placeholder {
-    color: #9ea3b9;
-    font-weight: 400;
+    color: #171c26;
+    opacity: 0.85;
+    font-weight: 600;
   }
 }
 
@@ -112,37 +121,41 @@
   @include custom-scrollbar;
 }
 
-/* Contact Item */
+/* Contact List */
 .contact-list {
   padding: 8px 0;
 }
 
 .contact-item {
   @include flex-between;
-  padding: 12px 24px;
+  padding: 9px 36px;
   cursor: pointer;
   @include transition-standard;
   outline: none;
 
+  @include mobile {
+    padding: 10px 20px;
+  }
+
   &:hover {
-    background-color: #f8f9fe;
+    background-color: #f4f6fc;
   }
 
   &.selected {
-    background-color: #f4f3ff;
+    background-color: #f7f8fe;
 
     .contact-name {
-      color: $text-dark;
+      color: #171c26;
       font-weight: 700;
     }
 
     .action-btn {
       background-color: #eceafd;
       border-color: transparent;
-      color: $primary-purple;
+      color: #625bf7;
 
       &:hover {
-        background-color: $primary-purple;
+        background-color: #625bf7;
         color: #ffffff;
       }
     }
@@ -159,9 +172,15 @@
 
 .avatar-container {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
+  @include flex-center;
+
+  &.no-avatar {
+    justify-content: flex-end;
+    padding-right: 4px;
+  }
 }
 
 .contact-avatar {
@@ -176,21 +195,29 @@
   position: absolute;
   bottom: -1px;
   right: -1px;
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: 2px solid #ffffff;
 
+  &.standalone {
+    position: static;
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 50%;
+  }
+
   &.online {
-    background-color: $status-online;
+    background-color: #22c55e;
   }
 
   &.away {
-    background-color: $status-away;
+    background-color: #f59e0b;
   }
 
   &.offline {
-    background-color: $status-offline;
+    background-color: #94a3b8;
   }
 }
 
@@ -201,16 +228,16 @@
 }
 
 .contact-name {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: $text-dark;
+  color: #171c26;
   @include truncate;
 }
 
 .contact-role {
   font-size: 12px;
   font-weight: 400;
-  color: $text-muted;
+  color: #8d96a5;
   margin-top: 2px;
   @include truncate;
 }
@@ -228,22 +255,22 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 1px solid $border-color;
+  border: 1px solid #ebeff4;
   background-color: #ffffff;
-  color: $text-muted;
+  color: #848e9c;
   @include flex-center;
   @include transition-standard;
 
   &:hover {
     border-color: #cbd5e1;
-    color: $primary-purple;
+    color: #625bf7;
     background-color: #ffffff;
   }
 }
 
 /* Skeleton Loading */
 .skeleton-list {
-  padding: 12px 24px;
+  padding: 12px 36px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -282,12 +309,12 @@
 .empty-title {
   font-size: 16px;
   font-weight: 600;
-  color: $text-dark;
+  color: #171c26;
 }
 
 .empty-subtitle {
   font-size: 13px;
-  color: $text-muted;
+  color: #8d96a5;
   margin-top: 4px;
 }
 
@@ -295,15 +322,15 @@
 .btn-retry {
   margin-top: 14px;
   padding: 8px 16px;
-  border-radius: $radius-sm;
+  border-radius: 8px;
   font-size: 13px;
   font-weight: 500;
-  background-color: $primary-purple;
+  background-color: #625bf7;
   color: #ffffff;
   @include transition-standard;
 
   &:hover {
-    background-color: $primary-purple-hover;
+    background-color: #4f46e5;
   }
 }
 

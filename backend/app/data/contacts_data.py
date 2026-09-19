@@ -1,36 +1,9 @@
 """Mock data layer for Contacts Management Application.
 
-Provides realistic mock contact profiles and email address records matching
-the Figma design and exercise specifications.
+Precisely reproduces the contacts, photos, presence indicators, and details from the Figma design.
 """
 
 CONTACTS = [
-    {
-        "id": "1",
-        "first_name": "Johanna",
-        "last_name": "Stevens",
-        "name": "Johanna Stevens",
-        "company": "WhiteUI Studio",
-        "job_title": "UI/UX Designer",
-        "phone": "439-582-1578",
-        "address": "742 Evergreen Terrace, Springfield, OR 97477",
-        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
-        "status": "online",
-        "bio": "When I first got into the advertising, I was looking for the magical combination that would put website into the top search engine rankings",
-        "dial": "j.stevens@ymsg.com",
-        "meeting_url": "http://go.betacall.com/meet/j.stevens",
-        "phone_numbers": [
-            {"number": "439-582-1578", "is_primary": True},
-            {"number": "621-770-7689", "is_primary": False}
-        ],
-        "social_links": {
-            "facebook": "https://facebook.com/johannastevens",
-            "pinterest": "https://pinterest.com/johannastevens",
-            "twitter": "https://twitter.com/johannastevens",
-            "linkedin": "https://linkedin.com/in/johannastevens",
-            "google": "https://plus.google.com/johannastevens"
-        }
-    },
     {
         "id": "2",
         "first_name": "Nicholas",
@@ -38,9 +11,10 @@ CONTACTS = [
         "name": "Nicholas Gordon",
         "company": "TechCorp Systems",
         "job_title": "Developer",
+        "list_role": "Developer",
         "phone": "555-234-8901",
         "address": "1200 Innovation Way, Austin, TX 78701",
-        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+        "avatar": "",  # In Figma, Nicholas Gordon has no avatar photo, just the green status dot
         "status": "online",
         "bio": "Senior full-stack engineer passionate about scalable cloud architectures, high performance microservices, and elegant UI interfaces.",
         "dial": "n.gordon@ymsg.com",
@@ -64,6 +38,7 @@ CONTACTS = [
         "name": "Bradley Malone",
         "company": "SalesLead Pro",
         "job_title": "Sales Manager",
+        "list_role": "Sales Manager",
         "phone": "415-982-3321",
         "address": "580 Market St, San Francisco, CA 94104",
         "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
@@ -75,8 +50,38 @@ CONTACTS = [
             {"number": "415-982-3321", "is_primary": True}
         ],
         "social_links": {
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
+            "twitter": "https://twitter.com",
             "linkedin": "https://linkedin.com",
-            "twitter": "https://twitter.com"
+            "google": "https://google.com"
+        }
+    },
+    {
+        "id": "1",
+        "first_name": "Johanna",
+        "last_name": "Stevens",
+        "name": "Johanna Stevens",
+        "company": "WhiteUI Studio",
+        "job_title": "UI/UX Designer",
+        "list_role": "Project Manager",  # In Figma list Johanna Stevens shows Project Manager
+        "phone": "439-582-1578",
+        "address": "742 Evergreen Terrace, Springfield, OR 97477",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+        "status": "online",
+        "bio": "When I first got into the advertising, I was looking for the magical combination that would put website into the top search engine rankings",
+        "dial": "j.stevens@ymsg.com",
+        "meeting_url": "http://go.betacall.com/meet/j.stevens",
+        "phone_numbers": [
+            {"number": "439-582-1578", "is_primary": True},
+            {"number": "621-770-7689", "is_primary": False}
+        ],
+        "social_links": {
+            "facebook": "https://facebook.com/johannastevens",
+            "pinterest": "https://pinterest.com/johannastevens",
+            "twitter": "https://twitter.com/johannastevens",
+            "linkedin": "https://linkedin.com/in/johannastevens",
+            "google": "https://plus.google.com/johannastevens"
         }
     },
     {
@@ -86,6 +91,7 @@ CONTACTS = [
         "name": "Marvin Lambert",
         "company": "DesignHub Collective",
         "job_title": "Designer",
+        "list_role": "Designer",
         "phone": "312-555-0199",
         "address": "333 Michigan Ave, Chicago, IL 60601",
         "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
@@ -97,8 +103,11 @@ CONTACTS = [
             {"number": "312-555-0199", "is_primary": True}
         ],
         "social_links": {
+            "facebook": "https://facebook.com",
             "pinterest": "https://pinterest.com",
-            "linkedin": "https://linkedin.com"
+            "twitter": "https://twitter.com",
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     },
     {
@@ -108,9 +117,10 @@ CONTACTS = [
         "name": "Teresa Lloyd",
         "company": "PressWave Global",
         "job_title": "PR agent",
+        "list_role": "PR agent",
         "phone": "212-555-8841",
         "address": "450 Lexington Ave, New York, NY 10017",
-        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+        "avatar": "",  # In Figma, Teresa Lloyd has no avatar photo, just the orange status dot
         "status": "away",
         "bio": "Media relations strategist connecting disruptive tech brands with global press and influential thought leaders.",
         "dial": "t.lloyd@ymsg.com",
@@ -119,8 +129,11 @@ CONTACTS = [
             {"number": "212-555-8841", "is_primary": True}
         ],
         "social_links": {
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
             "twitter": "https://twitter.com",
-            "linkedin": "https://linkedin.com"
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     },
     {
@@ -130,6 +143,7 @@ CONTACTS = [
         "name": "Fred Haynes",
         "company": "CustomerCare Solutions",
         "job_title": "Support Team",
+        "list_role": "Support Team",
         "phone": "702-555-4321",
         "address": "100 South 4th St, Las Vegas, NV 89101",
         "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
@@ -141,7 +155,11 @@ CONTACTS = [
             {"number": "702-555-4321", "is_primary": True}
         ],
         "social_links": {
-            "linkedin": "https://linkedin.com"
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
+            "twitter": "https://twitter.com",
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     },
     {
@@ -151,6 +169,7 @@ CONTACTS = [
         "name": "Rose Peters",
         "company": "DeliveryFlow Agile",
         "job_title": "Project Manager",
+        "list_role": "Project Manager",
         "phone": "617-555-7729",
         "address": "200 State St, Boston, MA 02109",
         "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
@@ -162,7 +181,11 @@ CONTACTS = [
             {"number": "617-555-7729", "is_primary": True}
         ],
         "social_links": {
-            "linkedin": "https://linkedin.com"
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
+            "twitter": "https://twitter.com",
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     },
     {
@@ -172,9 +195,10 @@ CONTACTS = [
         "name": "Brian Watson",
         "company": "CodeLab Technologies",
         "job_title": "Developer",
+        "list_role": "Developer",
         "phone": "503-555-3312",
         "address": "1000 SW Broadway, Portland, OR 97205",
-        "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80",
+        "avatar": "",  # In Figma, Brian Watson has no avatar photo, just the green status dot
         "status": "online",
         "bio": "Frontend specialist focused on Angular, reactive state management, and modern Web APIs.",
         "dial": "b.watson@ymsg.com",
@@ -183,8 +207,11 @@ CONTACTS = [
             {"number": "503-555-3312", "is_primary": True}
         ],
         "social_links": {
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
             "twitter": "https://twitter.com",
-            "linkedin": "https://linkedin.com"
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     },
     {
@@ -194,9 +221,10 @@ CONTACTS = [
         "name": "Hettie Richardson",
         "company": "SystemsCloud Infrastructure",
         "job_title": "Developer",
+        "list_role": "Developer",
         "phone": "415-555-9087",
         "address": "425 Mission St, San Francisco, CA 94105",
-        "avatar": "https://images.unsplash.com/photo-1534751516642-a171ed27150a?w=200&auto=format&fit=crop&q=80",
+        "avatar": "",  # In Figma, Hettie Richardson has no avatar photo, just the green status dot
         "status": "online",
         "bio": "Backend and DevOps enthusiast with hands-on expertise in container orchestration and serverless computing.",
         "dial": "h.richardson@ymsg.com",
@@ -205,13 +233,15 @@ CONTACTS = [
             {"number": "415-555-9087", "is_primary": True}
         ],
         "social_links": {
+            "facebook": "https://facebook.com",
+            "pinterest": "https://pinterest.com",
             "twitter": "https://twitter.com",
-            "linkedin": "https://linkedin.com"
+            "linkedin": "https://linkedin.com",
+            "google": "https://google.com"
         }
     }
 ]
 
-# Mapping of contact_id -> list of email addresses
 EMAIL_ADDRESSES = {
     "1": [
         {"id": "e-1-1", "contact_id": "1", "email": "johanna.stevens@gmail.com", "type": "Personal", "is_primary": True},

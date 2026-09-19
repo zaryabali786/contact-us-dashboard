@@ -21,6 +21,7 @@ export interface Contact {
   phone: string;
   company: string;
   job_title: string;
+  list_role?: string;
   avatar: string;
   avatarUrl?: string;
   status: 'online' | 'offline' | 'away' | 'busy' | string;

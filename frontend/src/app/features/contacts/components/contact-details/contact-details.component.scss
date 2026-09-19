@@ -4,12 +4,12 @@
 .contact-details-container {
   height: 100%;
   overflow-y: auto;
-  background-color: $bg-card;
+  background-color: #ffffff;
   @include custom-scrollbar;
-  padding: 40px 48px;
+  padding: 56px 64px 48px 64px;
 
   @include tablet {
-    padding: 32px 24px;
+    padding: 32px 28px;
   }
 
   @include mobile {
@@ -20,7 +20,7 @@
 /* Mobile Back Button */
 .mobile-nav-bar {
   display: none;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 
   @include tablet {
     display: block;
@@ -31,21 +31,21 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: $primary-purple;
+  color: #625bf7;
   padding: 6px 12px;
-  border-radius: $radius-sm;
-  background-color: $primary-purple-light;
+  border-radius: 6px;
+  background-color: #f4f3ff;
   @include transition-standard;
 
   &:hover {
-    background-color: #e0e3fc;
+    background-color: #eceafd;
   }
 }
 
 .details-content {
-  max-width: 680px;
+  max-width: 620px;
 }
 
 /* Profile Header Section */
@@ -53,35 +53,36 @@
   display: flex;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 
   @include mobile {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: 16px;
+    margin-bottom: 32px;
   }
 }
 
 .profile-avatar-wrapper {
   position: relative;
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
 
   @include mobile {
-    width: 96px;
-    height: 96px;
+    width: 88px;
+    height: 88px;
   }
 }
 
 .profile-avatar {
   width: 100%;
   height: 100%;
-  border-radius: 22px;
+  border-radius: 20px;
   object-fit: cover;
   background-color: #e5e7eb;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
 .profile-title-block {
@@ -97,14 +98,14 @@
 .profile-name {
   font-size: 22px;
   font-weight: 700;
-  color: $text-dark;
+  color: #171c26;
   letter-spacing: -0.2px;
 }
 
 .profile-role {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  color: $text-muted;
+  color: #8d96a5;
   margin-top: 4px;
   margin-bottom: 18px;
 }
@@ -113,7 +114,7 @@
 .actions-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 
   @include mobile {
@@ -125,20 +126,20 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
-  padding: 0 20px;
-  background-color: $primary-purple;
+  height: 38px;
+  padding: 0 18px;
+  background-color: #625bf7;
   color: #ffffff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(98, 91, 247, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(98, 91, 247, 0.3);
   @include transition-standard;
 
   &:hover {
-    background-color: $primary-purple-hover;
+    background-color: #4f46e5;
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(98, 91, 247, 0.42);
+    box-shadow: 0 6px 16px rgba(98, 91, 247, 0.38);
   }
 
   &:active {
@@ -147,16 +148,16 @@
 }
 
 .btn-action-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid $border-color;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #ebeff4;
   background-color: #ffffff;
   @include flex-center;
   @include transition-standard;
 
   &:hover {
-    border-color: #cbd5e1;
+    border-color: #d1d5db;
     background-color: #f9fafb;
     transform: translateY(-1px);
   }
@@ -166,14 +167,13 @@
 .info-grid {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding-top: 12px;
+  gap: 30px;
 }
 
 .info-row {
   display: flex;
   align-items: flex-start;
-  min-height: 24px;
+  min-height: 22px;
 
   @include mobile {
     flex-direction: column;
@@ -186,39 +186,36 @@
   flex-shrink: 0;
   font-size: 13px;
   font-weight: 500;
-  color: $text-muted;
-  padding-top: 2px;
+  color: #8d96a5;
+  padding-top: 1px;
 }
 
 .info-value {
   flex: 1;
-  font-size: 14px;
-  color: $text-dark;
+  font-size: 13px;
+  color: #2e3345;
   min-width: 0;
 }
 
 .bio-text {
   line-height: 1.6;
-  color: $text-secondary;
-}
-
-.address-text {
-  line-height: 1.5;
+  color: #2e3345;
+  max-width: 480px;
 }
 
 .interactive-link {
-  color: $text-dark;
+  color: #2e3345;
   text-decoration: none;
   word-break: break-all;
   @include transition-standard;
 
   &:hover {
-    color: $primary-purple;
+    color: #625bf7;
   }
 }
 
 .meeting-link {
-  color: $text-dark;
+  color: #2e3345;
 }
 
 /* Email List & Badges */
@@ -233,18 +230,18 @@
 .phone-entry {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .pill-badge {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 3px 10px;
   font-size: 11px;
-  font-weight: 600;
-  background-color: $bg-badge;
+  font-weight: 500;
+  background-color: #f1f3f7;
   color: #7e8299;
-  border-radius: 6px;
+  border-radius: 5px;
   letter-spacing: 0.1px;
 }
 
@@ -258,24 +255,24 @@
 .social-btn-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .social-btn {
   width: 34px;
   height: 34px;
-  border-radius: 8px;
-  border: 1px solid $border-color;
+  border-radius: 6px;
+  border: 1px solid #ebeff4;
   background-color: #ffffff;
   color: #7e8299;
   @include flex-center;
   @include transition-standard;
 
   &:hover {
-    border-color: $primary-purple;
-    color: $primary-purple;
-    background-color: $primary-purple-light;
+    border-color: #625bf7;
+    color: #625bf7;
+    background-color: #f4f3ff;
     transform: translateY(-1px);
   }
 }
@@ -298,12 +295,12 @@
   h3 {
     font-size: 18px;
     font-weight: 700;
-    color: $text-dark;
+    color: #171c26;
   }
 
   p {
     font-size: 13px;
-    color: $text-muted;
+    color: #8d96a5;
     line-height: 1.5;
   }
 }
@@ -314,7 +311,7 @@
 }
 
 .text-empty {
-  color: $text-muted;
+  color: #8d96a5;
   font-size: 13px;
   font-style: italic;
 }
